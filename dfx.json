@@ -10,8 +10,32 @@
         "output": "frontend/src/declarations/test"
       }
     },
+    "vacuna": {
+      "type": "motoko",
+      "main": "backend/vacuna/main.mo",
+      "declarations": {
+        "node_compatibility": true,
+        "output": "frontend/src/declarations/vacuna"
+      }
+    },
+    "cartilla": {
+      "type": "motoko",
+      "main": "backend/cartilla/main.mo",
+      "declarations": {
+        "node_compatibility": true,
+        "output": "frontend/src/declarations/cartilla"
+      }
+    },
+    "child": {
+      "type": "motoko",
+      "main": "backend/child/main.mo",
+      "declarations": {
+        "node_compatibility": true,
+        "output": "frontend/src/declarations/child"
+      }
+    },
     "frontend": {
-      "dependencies": ["test"],
+      "dependencies": ["test","cartilla","vacuna"],
       "frontend": {
         "entrypoint": "frontend/build/index.html"
       },
