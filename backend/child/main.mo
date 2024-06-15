@@ -1,61 +1,58 @@
-import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 import Result "mo:base/Result";
+import Text "mo:base/Text";
 import Bool "mo:base/Bool";
 import Int "mo:base/Int";
 
+
 actor {
-    type Profile = {
-        id : Int;
+    type Child = {
+        curp : Text;
         edad : Int;
         id_registro : Int;
     };
 
-    type GetProfileError = {
-        #userNotAuthenticated;
-        #profileNotFound;
+    type GetChildError = {
+        #ChildNotFound;
     };
 
-    type GetProfileResponse = Result.Result<Profile, GetProfileError>;
+    type GetChildResponse = Result.Result<Child, GetChildError>;
 
-    type CreateProfileError = {
-        #profileAlreadyExists;
-        #userNotAuthenticated;
+    type CreateChildError = {
+        #ChildAlreadyExists;
     };
 
-    type CreateProfileResponse = Result.Result<Bool, CreateProfileError>;
+    type CreateChildResponse = Result.Result<Bool, CreateChildError>;
 
-    let profiles = HashMap.HashMap<Principal, Profile>(0, Principal.equal, Principal.hash);
+    let Childs = HashMap.HashMap<Text, Child>(0, Text.equal, Text.hash);
 
-    public query ({caller}) func getProfile () : async GetProfileResponse {
-        if (Principal.isAnonymous(caller)) return #err(#userNotAuthenticated);
+    public query ({caller}) func getChild (curp : Text) : async GetChildResponse {
 
-        let profile = profiles.get(caller);
+        let Child = Childs.get(curp);
 
-        switch profile {
-            case (?profile) {
-                #ok(profile);
+        switch Child {
+            case (?Child) {
+                #ok(Child);
             };
             case null {
-                #err(#profileNotFound);
+                #err(#ChildNotFound);
             };
         }
     };
 
-    public shared ({caller}) func createProfile (id : Int, edad : Int, id_registro : Int) : async CreateProfileResponse {
-        if (Principal.isAnonymous(caller)) return #err(#userNotAuthenticated);
+    public shared ({caller}) func createChild (curp : Text, edad : Int, id_registro : Int) : async CreateChildResponse {
 
-        let profile = profiles.get(caller);
+        let Child = Childs.get(curp);
 
-        if (profile != null) return #err(#profileAlreadyExists);
+        if (Child != null) return #err(#ChildAlreadyExists);
 
-        let newProfile: Profile = {
-            id = id;
+        let newChild: Child = {
+            curp = curp;
             edad = edad;
             id_registro = id_registro;
         };
         
-        profiles.put(caller, newProfile);
+        Childs.put(curp, newChild);
 
         #ok(true);
     };
