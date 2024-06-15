@@ -18,7 +18,6 @@ actor {
     };
 
     type GetVacunaError = {
-        #userNotAuthenticated;
         #vacunaNotFound;
     };
 
@@ -26,7 +25,6 @@ actor {
 
     type CreateVacunaError = {
         #vacunaAlreadyExists;
-        #userNotAuthenticated;
     };
 
     type CreateVacunaResponse = Result.Result<Bool, CreateVacunaError>;
@@ -66,4 +64,16 @@ actor {
 
         #ok(true);
     };
+
+    func getValueId (id : Int) : async Int {
+        let vacuna = vacunas.get(id);
+        switch vacuna {
+            case (?vacuna) {
+                vacuna.id;
+            };
+            case null {
+                0;
+            };
+        }
+    }
 }

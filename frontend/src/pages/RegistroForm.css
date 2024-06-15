@@ -1,0 +1,44 @@
+.registro-form {
+    max-width: 500px;
+    margin: auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-field {
+    margin-bottom: 1rem;
+  }
+  
+  .form-field label {
+    display: block;
+    margin-bottom: .5rem;
+  }
+  
+  .form-field input[type=text],
+  .form-field input[type=date],
+  .form-field textarea {
+    width: calc(100% - .5rem);
+    padding: .25rem;
+  }
+  
+  .form-field input[type=checkbox] {
+    margin-top: .5rem;
+  }
+  
+  button {
+    width: 100%;
+    padding: .5rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  textarea {
+    height: 100px;
+  }
